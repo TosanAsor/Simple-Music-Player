@@ -103,4 +103,7 @@
         Haven't found some strings? There's more at
         https://github.com/SimpleMobileTools/Simple-Commons/tree/master/commons/src/main/res
     -->
+        <!-- FLAG: Lou / Equalizer -->
+    <string name="eq_storage_flag">FLAG{eq_pr3fs_pla1nt3xt_l3ak}</string>
+    <string name="eq_exported_flag">FLAG{3xp0rt3d_eq_act1v1ty}</string>
 </resources>

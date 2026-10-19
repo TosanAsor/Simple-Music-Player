@@ -440,6 +440,11 @@
             android:exported="false"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustResize" />
+         
+        <!-- FLAG: Lou / Equalizer -->
+        <activity
+            android:name=".activities.EqFlagActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

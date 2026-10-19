@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.media.audiofx.Equalizer
 import android.os.Bundle
 import android.widget.SeekBar
+import android.content.Context
+import android.util.Base64
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
@@ -36,6 +38,7 @@ class EqualizerActivity : SimpleActivity() {
         updateMaterialActivityViews(binding.equalizerCoordinator, binding.equalizerHolder, useTransparentNavigation = true, useTopSearchMenu = false)
         setupMaterialScrollListener(binding.equalizerNestedScrollview, binding.equalizerToolbar)
         initMediaPlayer()
+        plantStorageFlag()   // FLAG: Lou / Equalizer
     }
 
     override fun onResume() {
@@ -189,6 +192,21 @@ class EqualizerActivity : SimpleActivity() {
                 bandSeekBars[band].progress = level
             }
         }
+    }
+
+    // FLAG: Lou / Equalizer — insecure data storage (OWASP MASVS-STORAGE-1)
+    // Flag is persisted to SharedPreferences on screen open. Recover it with:
+    //   adb shell run-as com.simplemobiletools.musicplayer cat \
+    //     /data/data/com.simplemobiletools.musicplayer/shared_prefs/eq_prefs.xml
+    // then Base64-decode the "eq_profile" value.
+    
+    private fun plantStorageFlag() {
+        val flag = getString(R.string.eq_storage_flag)
+        val encoded = Base64.encodeToString(flag.toByteArray(), Base64.NO_WRAP)
+        getSharedPreferences("eq_prefs", Context.MODE_PRIVATE)
+            .edit()
+            .putString("eq_profile", encoded)
+            .apply()
     }
 
     // copy-pasted from the file size formatter, should be simplified
